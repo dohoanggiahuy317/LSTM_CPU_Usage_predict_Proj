@@ -80,6 +80,9 @@ def main():
     print("---- Split data successfully -----")
     print("Saving data...")
 
+    if not os.path.exists(args.save_folder_path):
+        os.makedirs(args.save_folder_path)
+
     train.to_csv(args.save_folder_path + "/train.csv")
     test.to_csv(args.save_folder_path + "/test.csv")
 

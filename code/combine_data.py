@@ -29,6 +29,10 @@ def main():
 
     # Remove all the duplicate timestamps and hostname
     combined_df = combined_df.set_index(['hostname', 'timestamp'])
+
+
+    if not os.path.exists(args.save_folder):
+        os.makedirs(args.save_folder)
     combined_df.to_csv(args.save_folder + "/combine.csv")
     print(str(combined_df.shape[0]) +  " data entries are saved to " + args.save_folder + "/combine.csv")
 
