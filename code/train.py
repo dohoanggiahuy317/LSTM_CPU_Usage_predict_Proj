@@ -30,12 +30,12 @@ def transform_data(df, prev_day, pred_day, model_path):
     # Chunk datafram into Features (number of days that model needs to know) and Labels (number of days model can predict)
     x_train, y_train = np_array_convert(df, prev = prev_day, pred = pred_day)
 
-    # Normalize the data and save the parameters of normalization
+    # Scaler initialization
     scaler = MinMaxScaler(feature_range=(0, 1))
-
     if not os.path.exists(model_path + "/scaler"):
         os.makedirs(model_path + "/scaler")
 
+    # Normalize the data and save the parameters of normalization
     x_train_scale = scaler.fit_transform(pd.DataFrame(x_train))
     joblib.dump(scaler, model_path + '/scaler/scaler_features.pkl')
 
@@ -53,7 +53,7 @@ def transform_data(df, prev_day, pred_day, model_path):
 def main():
 
     # Get the parameters from the shell script that will be used for training
-    parser = argparse.ArgumentParser(description='Split the dataset into Dataframe training and testing')
+    parser = argparse.ArgumentParser(description='Training model')
     parser.add_argument('--train_path', type=str, help='Dataset File')
     parser.add_argument('--save_model_path', type=str, help='Dataset File')
     parser.add_argument('--window', type=int, help='Window size for smoothing the dataset', default=10)

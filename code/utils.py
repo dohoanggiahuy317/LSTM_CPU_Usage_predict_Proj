@@ -14,7 +14,7 @@ def np_array_convert(dataset, prev, pred):
     for col_index in range( len(dataset.columns) ):
         col = dataset[dataset.columns[col_index]]
         
-        for i in range(len(dataset) - prev - pred):
+        for i in range(len(dataset) - prev - pred + 1):
             a = col.iloc[i:(i+prev)]
             dataX.append(a)
             dataY.append(col.iloc[i + prev: i + prev + pred])

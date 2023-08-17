@@ -84,11 +84,10 @@ def main():
 
     # Get the parameters from the shell script that will be used for evaluation
     parser = argparse.ArgumentParser(description='Split the dataset into Dataframe training and testing')
-    parser.add_argument('--eval_path',        type=str, help='Dataset File')
-    parser.add_argument('--model_path',       type=str, help='Dataset File')
-    parser.add_argument('--save_pred_path',   type=str, help='Dataset File')
-    parser.add_argument('--prev_day',         type=int, help='Train test split ratio File',           default=144)
-    parser.add_argument('--pred_day',         type=int, help='Window size for smoothing the dataset', default=12)
+    parser.add_argument('--eval_path', type=str, help='Dataset File')
+    parser.add_argument('--model_path', type=str, help='Model file path')
+    parser.add_argument('--prev_day', type=int, help='Number of days that model needs to know', default=144)
+    parser.add_argument('--pred_day', type=int, help='Number of days model can predict', default=12)
     args = parser.parse_args()
 
     # Read the dataset
@@ -107,10 +106,5 @@ def main():
     scaler = joblib.load(args.model_path + '/scaler/scaler_labels.pkl')
     preds = scaler.inverse_transform(preds)
     test_score(preds, y_test, args.pred_day)
-
-
-    # Save the prediction
-    # preds.to_csv(args.save_pred_path)
-    print(preds)
 
 main()
